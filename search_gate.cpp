@@ -45,7 +45,7 @@ int main(){
             }
             if (match){
                 for (int j = 0; j < 256; ++j) cout << '\b';
-                cout << "# Gates searched: " << count << "| Depth: " << depth;
+                cout << "# Gates searched: " << count << "| Depth: " << depth << unitbuf;
                 cout << endl << "Gate found: ";
                 for (int j = 0; j < gates.size(); ++j){
                     cout << gates[j];
@@ -56,7 +56,9 @@ int main(){
                 cout << endl;
                 break;
             }
-            if (depth >= 18){
+            if (depth > 16){
+                for (int j = 0; j < 256; ++j) cout << '\b';
+                cout << "# Gates searched: " << count << "| Depth: " << depth - 1 << unitbuf;
                 cout << endl << "Max depth reached. Gate not found. " << endl;
                 break;
             }
