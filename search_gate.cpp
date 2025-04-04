@@ -25,14 +25,16 @@ int main(){
         queue<string> nodes;
         nodes.push("");
         string gates;
-        int depth = -1;
+        int depth = -1, count = 0;
         while (!nodes.empty()){
             gates = nodes.front();
             nodes.pop();
             if ((int)gates.size() > depth){
                 depth = gates.size();
-                cout << "\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b";
-                cout << "Depth: " << unitbuf << depth;
+            }
+            if (count % 1000 == 0){
+                for (int j = 0; j < 256; ++j) cout << '\b';
+                cout << "# Gates searched: " << count << "| Depth: " << depth << unitbuf;
             }
             bool match = true;
             for (int j = 0; j < inputs[i].size(); ++j){
@@ -42,7 +44,9 @@ int main(){
                 }
             }
             if (match){
-                cout << endl << "Gates found: ";
+                for (int j = 0; j < 256; ++j) cout << '\b';
+                cout << "# Gates searched: " << count << "| Depth: " << depth;
+                cout << endl << "Gate found: ";
                 for (int j = 0; j < gates.size(); ++j){
                     cout << gates[j];
                     if (j != gates.size() - 1){
@@ -52,11 +56,12 @@ int main(){
                 cout << endl;
                 break;
             }
-            if (depth >= 16){
-                cout << endl << "Max depth reached. Gates not found. " << endl;
+            if (depth >= 18){
+                cout << endl << "Max depth reached. Gate not found. " << endl;
                 break;
             }
             string add_s = gates, add_h = gates;
+            ++count;
             add_s.append("s"), add_h.append("h");
             nodes.push(add_s), nodes.push(add_h);
         }
